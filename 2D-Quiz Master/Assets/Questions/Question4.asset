@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24b6624dce938e49bbfea585c2f0c56, type: 3}
   m_Name: Question4
   m_EditorClassIdentifier: 
-  question: What is the title of the seventh and final book in the Harry Potter series?
+  question: What are the four houses in Hogwarts School of Witchcraft and Wizardry?
   answers:
   - Gryffindor, Slytherin, Hufflepuff, Ravenclaw
   - Gryffindor, Slytherin, Thunderbird, Wampus

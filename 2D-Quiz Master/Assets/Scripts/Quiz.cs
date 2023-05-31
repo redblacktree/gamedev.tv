@@ -8,7 +8,8 @@ public class Quiz : MonoBehaviour
 {
     [Header("Questions")]
     [SerializeField] TextMeshProUGUI questionText;
-    [SerializeField] QuestionSO question;
+    [SerializeField] List<QuestionSO> questions = new List<QuestionSO>();
+    QuestionSO currentQuestion;
 
     [Header("Answers")]
     [SerializeField] GameObject[] answerButtons;
@@ -48,16 +49,32 @@ public class Quiz : MonoBehaviour
         hasAnswered = false;
         SetButtonState(true);
         SetDefaultButtonSprites();
+        if (questions.Count == 0)
+        {
+            Debug.Log("No more questions!");
+            return;
+        }
+        GetRandomQuestion();
         DisplayQuestion();
+    }
+
+    private void GetRandomQuestion()
+    {
+        int randomIndex = Random.Range(0, questions.Count);
+        currentQuestion = questions[randomIndex];
+        if (questions.Contains(currentQuestion))
+        {
+            questions.RemoveAt(randomIndex);
+        }
     }
 
     private void DisplayQuestion()
     {        
-        questionText.text = question.GetQuestion();
+        questionText.text = currentQuestion.GetQuestion();
         for (int i = 0; i < answerButtons.Length; i++)
         {
             TextMeshProUGUI buttonText = answerButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-            buttonText.text = question.GetAnswer(i);
+            buttonText.text = currentQuestion.GetAnswer(i);
         }
     }
 
@@ -79,16 +96,16 @@ public class Quiz : MonoBehaviour
 
     private void DisplayAnswer(int index) 
     {
-        Image buttonImage = answerButtons[question.GetCorrectAnswer()].GetComponent<Image>();
+        Image buttonImage = answerButtons[currentQuestion.GetCorrectAnswer()].GetComponent<Image>();
 
-        if (index == question.GetCorrectAnswer())
+        if (index == currentQuestion.GetCorrectAnswer())
         {
-            questionText.text = question.GetFactoid();
+            questionText.text = currentQuestion.GetFactoid();
             buttonImage.color = Color.green;       
         }
         else
         {
-            questionText.text = question.GetFactoid();
+            questionText.text = currentQuestion.GetFactoid();
             buttonImage.color = Color.red;
         }
     }
