@@ -23,10 +23,15 @@ public class Quiz : MonoBehaviour
     [Header("Timer")]
     [SerializeField] Image timerImage;
     Timer timer;
+
+    [Header("Scoring")]
+    [SerializeField] TextMeshProUGUI scoreText;
+    ScoreKeeper scoreKeeper;
     
     void Start()
     {
         timer = FindObjectOfType<Timer>();
+        scoreKeeper = FindObjectOfType<ScoreKeeper>();
         GetNextQuestion();
     }
     
@@ -56,6 +61,7 @@ public class Quiz : MonoBehaviour
         }
         GetRandomQuestion();
         DisplayQuestion();
+        scoreKeeper.IncrementQuestionsSeen();
     }
 
     private void GetRandomQuestion()
@@ -101,7 +107,8 @@ public class Quiz : MonoBehaviour
         if (index == currentQuestion.GetCorrectAnswer())
         {
             questionText.text = currentQuestion.GetFactoid();
-            buttonImage.color = Color.green;       
+            buttonImage.color = Color.green;
+            scoreKeeper.IncrementCorrectAnswers();
         }
         else
         {
@@ -114,8 +121,9 @@ public class Quiz : MonoBehaviour
     public void OnAnswerSelected(int index)
     {
         hasAnswered = true;
-        DisplayAnswer(index);        
+        DisplayAnswer(index);
         SetButtonState(false);
         timer.CancelTimer();
+        scoreText.text = $"Score: {scoreKeeper.GetScore().ToString()}%";
     }
 }
