@@ -1253,8 +1253,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: For this question, I will ask, what is the name of the Weasly Twins Joke
-    shop?
+  m_text: Question Text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d6ea0d6ded830de4c84855549873898d, type: 2}
   m_sharedMaterial: {fileID: -6466909901918964989, guid: d6ea0d6ded830de4c84855549873898d, type: 2}

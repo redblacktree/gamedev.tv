@@ -16,8 +16,8 @@ public class Quiz : MonoBehaviour
     bool hasAnswered = false;
 
     [Header("Buttons")]
-    [SerializeField] Color correctColor;
-    [SerializeField] Color incorrectColor;
+    [SerializeField] Color correctColor = Color.green;
+    [SerializeField] Color incorrectColor = Color.red;
 
     [Header("Timer")]
     [SerializeField] Image timerImage;
