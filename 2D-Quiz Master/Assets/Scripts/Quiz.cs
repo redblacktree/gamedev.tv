@@ -9,6 +9,7 @@ public class Quiz : MonoBehaviour
     [Header("Questions")]
     [SerializeField] TextMeshProUGUI questionText;
     [SerializeField] List<QuestionSO> questions = new List<QuestionSO>();
+    [SerializeField] int quizLength = 5;
     QuestionSO currentQuestion;
 
     [Header("Answers")]
@@ -36,7 +37,7 @@ public class Quiz : MonoBehaviour
     {
         timer = FindObjectOfType<Timer>();
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
-        progressSlider.maxValue = questions.Count;
+        progressSlider.maxValue = quizLength;
         progressSlider.value = 0;
         GetNextQuestion();
     }
@@ -64,7 +65,7 @@ public class Quiz : MonoBehaviour
         hasAnswered = false;
         SetButtonState(true);
         SetDefaultButtonSprites();
-        if (questions.Count == 0)
+        if (quizLength == 0)
         {
             Debug.Log("No more questions!");
             return;

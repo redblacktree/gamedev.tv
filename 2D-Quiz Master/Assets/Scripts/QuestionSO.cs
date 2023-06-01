@@ -7,11 +7,11 @@ using UnityEngine;
 public class QuestionSO : ScriptableObject 
 {
     [TextArea(2, 6)]
-    [SerializeField] string question = "Enter Question Here";
-    [SerializeField] string[] answers = new string[4];
-    [SerializeField] int correctAnswer = -1;
+    [SerializeField] public string question = "Enter Question Here";
+    [SerializeField] public string[] answers = new string[4];
+    [SerializeField] public int correctAnswer = -1;
     [TextArea(2, 6)]
-    [SerializeField] string factoid = "Enter Factoid Here";
+    [SerializeField] public string factoid = "Enter Factoid Here";
     
     public string GetQuestion()
     {

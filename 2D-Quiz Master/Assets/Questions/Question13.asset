@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24b6624dce938e49bbfea585c2f0c56, type: 3}
+  m_Name: Question13
+  m_EditorClassIdentifier: 
+  question: "Which character first told Harry he was a wizard?\r"
+  answers:
+  - "Professor Dumbledore\r"
+  - "Hagrid\r"
+  - "Professor McGonagall\r"
+  - "Sirius Black\r"
+  correctAnswer: 1
+  factoid: Hagrid, being the Keeper of Keys and Grounds at Hogwarts, often gets involved
+    in key events in Harry's life. He was also the one who physically delivered the
+    acceptance letter to Harry after the Dursleys refused to let him read the ones
+    arriving by mail.
