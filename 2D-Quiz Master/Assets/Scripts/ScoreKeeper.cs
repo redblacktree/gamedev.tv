@@ -7,16 +7,6 @@ public class ScoreKeeper : MonoBehaviour
     int correctAnswers = 0;
     int questionsSeen = 0;
 
-    void Start()
-    {
-                
-    }
-
-    void Update()
-    {
-        
-    }
-
     public int GetCorrectAnswers()
     {
         return correctAnswers;
