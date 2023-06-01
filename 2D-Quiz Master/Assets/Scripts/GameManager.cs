@@ -7,22 +7,29 @@ public class GameManager : MonoBehaviour
 {
     Quiz quiz;
     EndScreen endScreen;
+    StartScreen startScreen;
 
     void Awake()
     {
+        startScreen = FindObjectOfType<StartScreen>();
         quiz = FindObjectOfType<Quiz>();
         endScreen = FindObjectOfType<EndScreen>();
     }
 
     void Start()
     {
-        quiz.gameObject.SetActive(true);
+        startScreen.gameObject.SetActive(true);
+        quiz.gameObject.SetActive(false);
         endScreen.gameObject.SetActive(false);        
     }
 
     void Update()
     {
-        if (quiz.isComplete) {
+        if (startScreen && startScreen.startButtonClicked) {
+            startScreen.gameObject.SetActive(false);
+            quiz.gameObject.SetActive(true);
+        }
+        if (quiz && quiz.isComplete) {
             quiz.gameObject.SetActive(false);
             endScreen.gameObject.SetActive(true);
             endScreen.ShowFinalScore();
