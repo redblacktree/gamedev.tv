@@ -2648,6 +2648,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   finalScoreText: {fileID: 1006321737}
+  ranks:
+  - Muggle-in-Training
+  - Wand-Waving Wanderer
+  - Average Animagus
+  - Triwizard Champion
+  - Hogwarts Headmaster
 --- !u!1 &1682454357
 GameObject:
   m_ObjectHideFlags: 0
