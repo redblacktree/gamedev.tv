@@ -1646,7 +1646,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d78c4228989c03d4fab72a11943be0d6, type: 2}
   - {fileID: 11400000, guid: 3b0dfea4ce4eead49ad883fc6c564b0a, type: 2}
   - {fileID: 11400000, guid: b80cec909bf975e408086d68d4c4c674, type: 2}
-  quizLength: 5
+  quizLength: 10
   answerButtons:
   - {fileID: 2090787873}
   - {fileID: 1498261333}
@@ -1741,7 +1741,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1434535307}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1865714887}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: Exit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1434535307
 MonoBehaviour:
   m_ObjectHideFlags: 0
