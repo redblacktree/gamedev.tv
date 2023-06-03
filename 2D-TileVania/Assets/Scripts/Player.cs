@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     Vector2 moveInput;
     Rigidbody2D rb;
     Animator animator;
+    CapsuleCollider2D collider;
     struct PlayerState
     {
         public bool isRunning;
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        collider = GetComponent<CapsuleCollider2D>();
     }
 
     void Update()
@@ -70,6 +72,9 @@ public class Player : MonoBehaviour
 
     void OnJump(InputValue value)
     {
-        Jump();
+        if (collider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        {
+            Jump();
+        }
     }
 }
