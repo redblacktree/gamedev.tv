@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class Player : MonoBehaviour
 {
-    [SerializeField] float speed = 5f;
-
     Vector2 moveInput;
     Rigidbody2D rb;
     Animator animator;
@@ -18,12 +16,14 @@ public class PlayerMovement : MonoBehaviour
         public bool isAttacking;
         public bool isDead;
     }
-    PlayerState playerState;
+
+    [SerializeField] float speed = 5f;
+    [SerializeField] float jumpForce = 5f;
+    [SerializeField] PlayerState playerState;
 
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        PlayerState playerState = new PlayerState();
     }
 
     void Update()
@@ -50,6 +50,11 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("IsRunning", playerState.isRunning);
     }
 
+    void Jump()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+    }
+
     void FlipSprite()
     {
         if (playerState.isRunning)
@@ -61,5 +66,10 @@ public class PlayerMovement : MonoBehaviour
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
+    }
+
+    void OnJump(InputValue value)
+    {
+        Jump();
     }
 }
