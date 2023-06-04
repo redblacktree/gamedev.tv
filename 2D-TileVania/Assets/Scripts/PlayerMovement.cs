@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
     void Run() 
     {
         rb.velocity = new Vector2(moveInput.x * speed, rb.velocity.y);
-        animator.SetBool("IsRunning", playerState.isRunning);
+        //animator.SetBool("IsRunning", playerState.isRunning);
     }
 
     void Jump()
@@ -105,16 +105,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Die()
     {
-        if (bodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")))
+        if (bodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies", "Hazards")))
         {
             playerState.isAlive = false;
             animator.SetTrigger("Die");
-            // shake the screen
-
-
-            // play death sound
-
-            // rb.velocity = new Vector2(0f, 0f);
+            rb.velocity = new Vector2(0f, 0f);
+            
             // rb.gravityScale = 0;
             // bodyCollider.enabled = false;
             // footCollider.enabled = false;
