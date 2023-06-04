@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     {
         public bool isRunning;
         public bool isJumping;
+        public bool isClimbing;
         public bool isFalling;
         public bool isAttacking;
         public bool isDead;
@@ -20,6 +21,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] float speed = 5f;
     [SerializeField] float jumpForce = 5f;
+    [SerializeField] float climbSpeed = 5f;
     [SerializeField] PlayerState playerState;
 
     private void Awake() {
@@ -32,6 +34,7 @@ public class Player : MonoBehaviour
     {
         UpdateState();
         Run();
+        Climb();
         Animate();
     }
 
@@ -44,6 +47,7 @@ public class Player : MonoBehaviour
     {
         FlipSprite();
         animator.SetBool("IsRunning", playerState.isRunning);
+        animator.SetBool("IsClimbing", playerState.isClimbing);
     }
 
     void Run() 
@@ -55,6 +59,14 @@ public class Player : MonoBehaviour
     void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+    }
+
+    void Climb()
+    {
+        if (collider.IsTouchingLayers(LayerMask.GetMask("Ladder")))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, moveInput.y * climbSpeed);
+        }        
     }
 
     void FlipSprite()
