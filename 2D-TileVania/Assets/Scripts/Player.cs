@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     Animator animator;
     CapsuleCollider2D capsuleCollider;
     BoxCollider2D footCollider;
+    int jumps = 0;
     struct PlayerState
     {
         public bool isRunning;
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
     [SerializeField] float climbSpeed = 5f;
     [SerializeField] PlayerState playerState;
     [SerializeField] float playerGravity = 5f;
+    [SerializeField] int extraJumps = 1;
 
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
@@ -69,7 +71,7 @@ public class Player : MonoBehaviour
 
     void Climb()
     {
-        if (footCollider.IsTouchingLayers(LayerMask.GetMask("Ladder")))
+        if (footCollider.IsTouchingLayers(LayerMask.GetMask("Ladder")) && Mathf.Abs(moveInput.y) > Mathf.Epsilon)
         {
             rb.velocity = new Vector2(rb.velocity.x, moveInput.y * climbSpeed);
             if (moveInput.y == 0) 
@@ -114,7 +116,13 @@ public class Player : MonoBehaviour
     {
         if (footCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
         {
+            jumps = extraJumps;
             Jump();
+        }
+        else if (jumps > 0)
+        {
+            Jump();
+            jumps--;
         }
     }
 }
