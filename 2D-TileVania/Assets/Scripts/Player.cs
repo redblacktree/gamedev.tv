@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
         public bool isRunning;
         public bool isJumping;
         public bool isClimbing;
+        public bool isStoppedClimbing;
         public bool isFalling;
         public bool isAttacking;
         public bool isDead;
@@ -23,9 +24,11 @@ public class Player : MonoBehaviour
     [SerializeField] float jumpForce = 5f;
     [SerializeField] float climbSpeed = 5f;
     [SerializeField] PlayerState playerState;
+    [SerializeField] float playerGravity = 5f;
 
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = playerGravity;
         animator = GetComponent<Animator>();
         collider = GetComponent<CapsuleCollider2D>();
     }
@@ -48,6 +51,7 @@ public class Player : MonoBehaviour
         FlipSprite();
         animator.SetBool("IsRunning", playerState.isRunning);
         animator.SetBool("IsClimbing", playerState.isClimbing);
+        animator.SetBool("IsStoppedClimbing", playerState.isStoppedClimbing);
     }
 
     void Run() 
@@ -66,7 +70,29 @@ public class Player : MonoBehaviour
         if (collider.IsTouchingLayers(LayerMask.GetMask("Ladder")))
         {
             rb.velocity = new Vector2(rb.velocity.x, moveInput.y * climbSpeed);
-        }        
+            if (moveInput.y == 0) 
+            {
+                playerState.isStoppedClimbing = true;                
+            }
+            else
+            {
+                playerState.isStoppedClimbing = false;
+                playerState.isClimbing = true;
+            }
+        }
+        else
+        {
+            playerState.isClimbing = false;
+            playerState.isStoppedClimbing = false;
+        }
+        if (playerState.isClimbing || playerState.isStoppedClimbing) 
+        {
+            rb.gravityScale = 0;
+        } 
+        else 
+        {
+            rb.gravityScale = playerGravity;
+        }              
     }
 
     void FlipSprite()
