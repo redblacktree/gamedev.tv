@@ -17,7 +17,7 @@ TagManager:
   - Player
   - Background
   - Bouncing
-  - 
+  - Enemies
   - 
   - 
   - 
@@ -53,6 +53,9 @@ TagManager:
     locked: 0
   - name: Ladder
     uniqueID: 4269219979
+    locked: 0
+  - name: Enemies
+    uniqueID: 3233920511
     locked: 0
   - name: Player
     uniqueID: 528905799
