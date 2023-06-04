@@ -8,7 +8,8 @@ public class Player : MonoBehaviour
     Vector2 moveInput;
     Rigidbody2D rb;
     Animator animator;
-    CapsuleCollider2D collider;
+    CapsuleCollider2D capsuleCollider;
+    BoxCollider2D footCollider;
     struct PlayerState
     {
         public bool isRunning;
@@ -30,7 +31,8 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = playerGravity;
         animator = GetComponent<Animator>();
-        collider = GetComponent<CapsuleCollider2D>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        footCollider = GetComponent<BoxCollider2D>();
     }
 
     void Update()
@@ -67,7 +69,7 @@ public class Player : MonoBehaviour
 
     void Climb()
     {
-        if (collider.IsTouchingLayers(LayerMask.GetMask("Ladder")))
+        if (footCollider.IsTouchingLayers(LayerMask.GetMask("Ladder")))
         {
             rb.velocity = new Vector2(rb.velocity.x, moveInput.y * climbSpeed);
             if (moveInput.y == 0) 
@@ -110,7 +112,7 @@ public class Player : MonoBehaviour
 
     void OnJump(InputValue value)
     {
-        if (collider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        if (footCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
         {
             Jump();
         }
