@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class EnemyMovement : MonoBehaviour
 {
     Rigidbody2D rb;
     BoxCollider2D reversePeriscope;
@@ -25,6 +25,6 @@ public class Enemy : MonoBehaviour
         {
             speed = -speed;
             transform.localScale = new Vector2(Mathf.Sign(speed), 1f);
-        }        
+        }
     }
 }

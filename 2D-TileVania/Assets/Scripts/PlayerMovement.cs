@@ -3,46 +3,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     Vector2 moveInput;
     Rigidbody2D rb;
     Animator animator;
-    CapsuleCollider2D capsuleCollider;
+    CapsuleCollider2D bodyCollider;
     BoxCollider2D footCollider;
     int jumps = 0;
-    struct PlayerState
+    struct PlayerMovementState
     {
         public bool isRunning;
         public bool isJumping;
         public bool isClimbing;
         public bool isStoppedClimbing;
-        public bool isFalling;
-        public bool isAttacking;
-        public bool isDead;
+        public bool isAlive;
     }
 
     [SerializeField] float speed = 5f;
     [SerializeField] float jumpForce = 5f;
     [SerializeField] float climbSpeed = 5f;
-    [SerializeField] PlayerState playerState;
+    [SerializeField] PlayerMovementState playerState;
     [SerializeField] float playerGravity = 5f;
     [SerializeField] int extraJumps = 1;
 
-    private void Awake() {
+    void Awake() {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = playerGravity;
         animator = GetComponent<Animator>();
-        capsuleCollider = GetComponent<CapsuleCollider2D>();
-        footCollider = GetComponent<BoxCollider2D>();
+        bodyCollider = GetComponent<CapsuleCollider2D>();
+        footCollider = GetComponent<BoxCollider2D>();        
+    }
+
+    void Start() {
+        playerState.isAlive = true;
     }
 
     void Update()
     {
+        if (!playerState.isAlive) { return; }
         UpdateState();
         Run();
         Climb();
         Animate();
+        Die();
     }
 
     void UpdateState()
@@ -99,6 +103,24 @@ public class Player : MonoBehaviour
         }              
     }
 
+    void Die()
+    {
+        if (bodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")))
+        {
+            playerState.isAlive = false;
+            animator.SetTrigger("Die");
+            // shake the screen
+
+
+            // play death sound
+
+            // rb.velocity = new Vector2(0f, 0f);
+            // rb.gravityScale = 0;
+            // bodyCollider.enabled = false;
+            // footCollider.enabled = false;
+        }
+    }
+
     void FlipSprite()
     {
         if (playerState.isRunning)
@@ -109,11 +131,13 @@ public class Player : MonoBehaviour
 
     void OnMove(InputValue value)
     {
+        if (!playerState.isAlive) { return; }
         moveInput = value.Get<Vector2>();
     }
 
     void OnJump(InputValue value)
     {
+        if (!playerState.isAlive) { return; }
         if (footCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
         {
             jumps = extraJumps;
