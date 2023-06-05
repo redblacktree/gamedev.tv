@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     Animator animator;
     CapsuleCollider2D bodyCollider;
     BoxCollider2D footCollider;
+    
     int jumps = 0;
     struct PlayerMovementState
     {
@@ -19,20 +20,22 @@ public class PlayerMovement : MonoBehaviour
         public bool isStoppedClimbing;
         public bool isAlive;
     }
+    PlayerMovementState playerState;
 
     [SerializeField] float speed = 5f;
     [SerializeField] float jumpForce = 5f;
     [SerializeField] float climbSpeed = 5f;
-    [SerializeField] PlayerMovementState playerState;
     [SerializeField] float playerGravity = 5f;
     [SerializeField] int extraJumps = 1;
+    [SerializeField] GameObject gun;
+    [SerializeField] GameObject bullet;
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = playerGravity;
         animator = GetComponent<Animator>();
         bodyCollider = GetComponent<CapsuleCollider2D>();
-        footCollider = GetComponent<BoxCollider2D>();        
+        footCollider = GetComponent<BoxCollider2D>();
     }
 
     void Start() {
@@ -42,16 +45,10 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         if (!playerState.isAlive) { return; }
-        UpdateState();
         Run();
         Climb();
         Animate();
         Die();
-    }
-
-    void UpdateState()
-    {
-        playerState.isRunning = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon;;
     }
 
     void Animate()
@@ -65,7 +62,8 @@ public class PlayerMovement : MonoBehaviour
     void Run() 
     {
         rb.velocity = new Vector2(moveInput.x * speed, rb.velocity.y);
-        //animator.SetBool("IsRunning", playerState.isRunning);
+        playerState.isRunning = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon;
+        animator.SetBool("IsRunning", playerState.isRunning);
     }
 
     void Jump()
@@ -110,10 +108,6 @@ public class PlayerMovement : MonoBehaviour
             playerState.isAlive = false;
             animator.SetTrigger("Die");
             rb.velocity = new Vector2(0f, 0f);
-            
-            // rb.gravityScale = 0;
-            // bodyCollider.enabled = false;
-            // footCollider.enabled = false;
         }
     }
 
@@ -144,5 +138,12 @@ public class PlayerMovement : MonoBehaviour
             Jump();
             jumps--;
         }
+    }
+
+    void OnFire(InputValue value)
+    {
+        if (!playerState.isAlive) { return; }
+        GameObject shot = Instantiate(bullet, gun.transform.position, transform.rotation);
+        shot.transform.localScale = new Vector2(transform.localScale.x, 1f);
     }
 }
