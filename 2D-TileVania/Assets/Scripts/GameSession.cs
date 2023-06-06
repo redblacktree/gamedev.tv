@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameSession : MonoBehaviour
 {
     [SerializeField] int playerLives = 3;
+    [SerializeField] int coins = 0;
     [SerializeField] float gameOverDelay = 2f;
     [SerializeField] float playerDeathDelay = 2f;
 
@@ -37,6 +38,11 @@ public class GameSession : MonoBehaviour
         {
             StartCoroutine(TakeLife());
         }
+    }
+
+    public void AddCoin()
+    {
+        coins++;
     }
 
     void ResetGameSession()
