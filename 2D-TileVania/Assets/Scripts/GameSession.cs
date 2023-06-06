@@ -15,8 +15,12 @@ public class GameSession : MonoBehaviour
     [SerializeField] TextMeshProUGUI livesText;
     [SerializeField] TextMeshProUGUI coinsText;
 
+    ScenePersist scenePersist;
+
     void Awake()
     {
+        scenePersist = FindObjectOfType<ScenePersist>();
+
         int numGameSessions = FindObjectsOfType<GameSession>().Length;
         if (numGameSessions > 1)
         {
@@ -36,7 +40,7 @@ public class GameSession : MonoBehaviour
 
     public void ProcessPlayerDeath()
     {
-        if (playerLives <= 0)
+        if (playerLives <= 1)
         {
             StartCoroutine(GameOver());
         }
@@ -70,5 +74,6 @@ public class GameSession : MonoBehaviour
         yield return new WaitForSecondsRealtime(gameOverDelay);
         //SceneManager.LoadScene("Game Over");
         ResetGameSession();
+        scenePersist.ResetScenePersist();
     }
 }

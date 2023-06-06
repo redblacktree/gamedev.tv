@@ -8,6 +8,13 @@ public class LevelExit : MonoBehaviour
     [SerializeField] float levelLoadDelay = 2f;
     [SerializeField] float levelExitSlowMoFactor = 0.2f;
 
+    ScenePersist scenePersist;
+
+    void Awake()
+    {
+        scenePersist = FindObjectOfType<ScenePersist>();
+    }
+
     private void OnTriggerEnter2D(Collider2D other) {
         StartCoroutine(LoadNextLevel());
     }
@@ -21,7 +28,8 @@ public class LevelExit : MonoBehaviour
         if (nextSceneIndex == SceneManager.sceneCountInBuildSettings)
         {
             nextSceneIndex = 0;
-        }
+        }        
         SceneManager.LoadScene(nextSceneIndex);
+        scenePersist.ResetScenePersist();
     }
 }

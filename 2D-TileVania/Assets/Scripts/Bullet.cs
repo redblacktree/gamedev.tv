@@ -13,7 +13,11 @@ public class Bullet : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        player = FindObjectOfType<PlayerMovement>();
+        player = FindObjectOfType<PlayerMovement>(); 
+    }
+
+    void Start() 
+    {
         xSpeed = player.transform.localScale.x * speed;
     }
 
