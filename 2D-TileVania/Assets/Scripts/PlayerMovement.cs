@@ -124,6 +124,8 @@ public class PlayerMovement : MonoBehaviour
             playerState.isAlive = false;
             animator.SetTrigger("Die");
             rb.velocity = new Vector2(0f, 0f);
+            GameSession gameSession = FindObjectOfType<GameSession>();
+            gameSession.ProcessPlayerDeath();
         }
     }
 
