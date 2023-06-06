@@ -21,7 +21,7 @@ TagManager:
   - PostProcessing
   - Hazards
   - Bullets
-  - 
+  - Interactables
   - 
   - 
   - 
@@ -56,6 +56,9 @@ TagManager:
     locked: 0
   - name: Hazards
     uniqueID: 905851529
+    locked: 0
+  - name: Interactables
+    uniqueID: 1745154205
     locked: 0
   - name: Enemies
     uniqueID: 3233920511

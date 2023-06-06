@@ -97,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (playerState.isOnLadder)
+        if (playerState.isOnLadder || playerState.isClimbing)
         {
             rb.gravityScale = 0;
             if (playerState.isClimbing)
