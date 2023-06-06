@@ -17,12 +17,13 @@ public class PlayerMovement : MonoBehaviour
         public bool isRunning;
         public bool isJumping;
         public bool isClimbing;
-        public bool isStoppedClimbing;
+        public bool isOnLadder;
         public bool isAlive;
     }
     PlayerMovementState playerState;
 
     [SerializeField] float speed = 5f;
+    [SerializeField] float runDeadZone = 1f;
     [SerializeField] float jumpForce = 5f;
     [SerializeField] float climbSpeed = 5f;
     [SerializeField] float playerGravity = 5f;
@@ -56,14 +57,19 @@ public class PlayerMovement : MonoBehaviour
         FlipSprite();
         animator.SetBool("IsRunning", playerState.isRunning);
         animator.SetBool("IsClimbing", playerState.isClimbing);
-        animator.SetBool("IsStoppedClimbing", playerState.isStoppedClimbing);
+        animator.SetBool("IsOnLadder", playerState.isOnLadder);
     }
 
     void Run() 
     {
-        rb.velocity = new Vector2(moveInput.x * speed, rb.velocity.y);
-        playerState.isRunning = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon;
-        animator.SetBool("IsRunning", playerState.isRunning);
+        float moveX = moveInput.x;
+        // dampen X move speed if on a ladder, so that joystick controls are more forgiving
+        if (playerState.isOnLadder)
+        {
+            moveX = moveInput.x * 0.5f;
+        }
+        rb.velocity = new Vector2(moveX * speed, rb.velocity.y);
+        playerState.isRunning = Mathf.Abs(rb.velocity.x) > runDeadZone;
     }
 
     void Jump()
@@ -73,32 +79,42 @@ public class PlayerMovement : MonoBehaviour
 
     void Climb()
     {
-        if (footCollider.IsTouchingLayers(LayerMask.GetMask("Ladder")) && Mathf.Abs(moveInput.y) > Mathf.Epsilon)
+        if (footCollider.IsTouchingLayers(LayerMask.GetMask("Ladder")) && !footCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
         {
-            rb.velocity = new Vector2(rb.velocity.x, moveInput.y * climbSpeed);
-            if (moveInput.y == 0) 
-            {
-                playerState.isStoppedClimbing = true;                
-            }
-            else
-            {
-                playerState.isStoppedClimbing = false;
-                playerState.isClimbing = true;
-            }
+            playerState.isOnLadder = true;            
         }
         else
-        {
-            playerState.isClimbing = false;
-            playerState.isStoppedClimbing = false;
+        {            
+            playerState.isOnLadder = false;
         }
-        if (playerState.isClimbing || playerState.isStoppedClimbing) 
+        if (footCollider.IsTouchingLayers(LayerMask.GetMask("Ladder")) && Mathf.Abs(moveInput.y) > 0f)
+        {
+            playerState.isClimbing = true;            
+        }
+        else
+        {            
+            playerState.isClimbing = false;
+        }
+
+
+        if (playerState.isOnLadder)
         {
             rb.gravityScale = 0;
+            if (playerState.isClimbing)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, moveInput.y * climbSpeed);
+            }
+            else 
+            {
+                rb.velocity = new Vector2(rb.velocity.x, 0);
+            }
         } 
         else 
         {
             rb.gravityScale = playerGravity;
-        }              
+        }
+
+        
     }
 
     void Die()
@@ -127,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnJump(InputValue value)
     {
-        if (!playerState.isAlive) { return; }
+        if (!playerState.isAlive) { return; }        
         if (footCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
         {
             jumps = extraJumps;
@@ -137,6 +153,10 @@ public class PlayerMovement : MonoBehaviour
         {
             Jump();
             jumps--;
+        }
+        else 
+        {
+            Debug.Log("No Jumps");
         }
     }
 
