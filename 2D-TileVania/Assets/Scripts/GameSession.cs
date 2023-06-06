@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameSession : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class GameSession : MonoBehaviour
     [SerializeField] int coins = 0;
     [SerializeField] float gameOverDelay = 2f;
     [SerializeField] float playerDeathDelay = 2f;
+    [SerializeField] AudioClip coinPickupSFX;
+
+    [SerializeField] TextMeshProUGUI livesText;
+    [SerializeField] TextMeshProUGUI coinsText;
 
     void Awake()
     {
@@ -25,7 +30,8 @@ public class GameSession : MonoBehaviour
 
     void Update()
     {
-        
+        livesText.text = playerLives.ToString();
+        coinsText.text = coins.ToString();
     }
 
     public void ProcessPlayerDeath()

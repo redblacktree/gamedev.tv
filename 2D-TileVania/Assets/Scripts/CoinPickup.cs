@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class CoinPickup : MonoBehaviour
 {
+    [SerializeField] AudioClip coinPickupSFX;
+    
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Collision with coin");
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            Debug.Log("Coin collided with player");
+            AudioSource.PlayClipAtPoint(coinPickupSFX, Camera.main.transform.position);
             FindObjectOfType<GameSession>().AddCoin();
             Destroy(gameObject);
         }
