@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     bool crashed = false;
     AudioSource audioSource;
     [SerializeField] float torque = 20f;
-    [SerializeField] float sceneReloadDelay = 2f;
+    [SerializeField] float sceneReloadDelay = 4f;
     [SerializeField] float jumpForce = 350f;
     [SerializeField] float minimumSpeed = 15f;
     [SerializeField] float boostForce = 100f;
@@ -93,27 +93,32 @@ public class PlayerController : MonoBehaviour
     }
 
     public void EndRun() {
-        Debug.Log("Run ended");
         DisableControls();
-        Invoke("ReloadScene", sceneReloadDelay);
-    }
+        StartCoroutine(ReloadScene());
+    }    
 
     public void Crash() {
         if (!crashed) {
             crashed = true;
-            Debug.Log("Crashed");
             DisableControls();
-            Invoke("ReloadScene", sceneReloadDelay);
+            StartCoroutine(ReloadScene());
             crashEffect.Play();
-            audioSource.PlayOneShot(crashSound);
+            //audioSource.PlayOneShot(crashSound);
             // stop all movement
             rb.velocity = Vector2.zero;
         }
     }
 
-    void ReloadScene() {
+    IEnumerator ReloadScene() {
         canMove = true;
+        if (!crashed)
+        {
+            Debug.Log("setting time scale to 0");
+            Time.timeScale = 0;
+        }
+        yield return new WaitForSecondsRealtime(sceneReloadDelay);
         crashed = false;
+        Time.timeScale = 1;
         SceneManager.LoadScene("Level1");
     }
 }

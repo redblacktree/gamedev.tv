@@ -9,7 +9,7 @@ public class FinsihLine : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Player") {
             finishEffect.Play();
-            GetComponent<AudioSource>().Play();
+            //GetComponent<AudioSource>().Play();
             GameObject.Find("Timer").GetComponent<TimerController>().Stop();
             other.gameObject.GetComponent<PlayerController>().EndRun();        
         }
