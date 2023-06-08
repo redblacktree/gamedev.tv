@@ -6,10 +6,10 @@ using UnityEngine;
 public class WaveConfigSO : ScriptableObject
 {
     [SerializeField] GameObject pathPrefab;
-    [SerializeField] GameObject enemyPrefab;
+    [SerializeField] List<GameObject> enemyPrefabs;
     [SerializeField] float timeBetweenSpawns = 0.5f;
     [SerializeField] float spawnRandomFactor = 0.3f;
-    [SerializeField] int numberOfEnemies = 5;
+    [SerializeField] float minimumSpawnDelay = 0.2f;
     [SerializeField] float moveSpeed = 5f;
 
     // get starting waypoint
@@ -32,5 +32,20 @@ public class WaveConfigSO : ScriptableObject
     {
         return moveSpeed;
     }
+    
+    public float GetTimeBetweenSpawns()
+    {
+        return Mathf.Clamp(timeBetweenSpawns + Random.Range(-spawnRandomFactor, spawnRandomFactor), minimumSpawnDelay, float.MaxValue);
+        //return timeBetweenSpawns;
+    }
 
+    public int GetEnemyCount()
+    {
+        return enemyPrefabs.Count;
+    }
+
+    public GameObject GetEnemyPrefab(int index)
+    {
+        return enemyPrefabs[index];
+    }
 }
