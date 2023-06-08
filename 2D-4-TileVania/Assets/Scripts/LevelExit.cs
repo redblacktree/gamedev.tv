@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class LevelExit : MonoBehaviour
 {
     [SerializeField] float levelLoadDelay = 2f;
-    [SerializeField] float levelExitSlowMoFactor = 0.2f;
 
     ScenePersist scenePersist;
 
@@ -21,9 +20,7 @@ public class LevelExit : MonoBehaviour
 
     IEnumerator LoadNextLevel()
     {
-        Time.timeScale = levelExitSlowMoFactor;
         yield return new WaitForSecondsRealtime(levelLoadDelay);
-        Time.timeScale = 1f;
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if (nextSceneIndex == SceneManager.sceneCountInBuildSettings)
         {
