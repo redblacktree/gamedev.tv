@@ -35,8 +35,9 @@ public class WaveConfigSO : ScriptableObject
     
     public float GetTimeBetweenSpawns()
     {
-        return Mathf.Clamp(timeBetweenSpawns + Random.Range(-spawnRandomFactor, spawnRandomFactor), minimumSpawnDelay, float.MaxValue);
-        //return timeBetweenSpawns;
+        return Mathf.Clamp(timeBetweenSpawns + Random.Range(-spawnRandomFactor, spawnRandomFactor), 
+                           minimumSpawnDelay, 
+                           float.MaxValue);        
     }
 
     public int GetEnemyCount()

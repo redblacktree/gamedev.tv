@@ -58,10 +58,8 @@ public class Player : MonoBehaviour
 
     void OnFire(InputValue value)
     {
-        Debug.Log("OnFire");
         if (shooter != null)
         {
-            Debug.Log("shooter != null");
             shooter.isFiring = value.isPressed;
         }
     }
