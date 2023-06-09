@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
             DisableControls();
             StartCoroutine(ReloadScene());
             crashEffect.Play();
-            //audioSource.PlayOneShot(crashSound);
+            audioSource.PlayOneShot(crashSound);
             // stop all movement
             rb.velocity = Vector2.zero;
         }
