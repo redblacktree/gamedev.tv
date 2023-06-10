@@ -5,6 +5,7 @@ using UnityEngine;
 public class DamageDealer : MonoBehaviour
 {
     [SerializeField] int damage = 100;
+    [SerializeField] List<LayerMask> friendlyFireLayers;
     
     public int GetDamage()
     {
@@ -14,5 +15,10 @@ public class DamageDealer : MonoBehaviour
     public void Hit()
     {
         Destroy(gameObject);
+    }
+
+    public List<LayerMask> GetFriendlyFireLayers()
+    {
+        return friendlyFireLayers;
     }
 }

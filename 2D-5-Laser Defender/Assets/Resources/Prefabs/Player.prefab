@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7496038424807538282}
   - component: {fileID: 7754590960683158577}
   - component: {fileID: 8580827520215563788}
+  - component: {fileID: 7668783448448547795}
   - component: {fileID: 852984152}
   - component: {fileID: 852984157}
-  - component: {fileID: 7668783448448547795}
   - component: {fileID: 4094089299877167915}
   - component: {fileID: 375940460223145933}
   m_Layer: 7
@@ -131,6 +131,27 @@ PolygonCollider2D:
       - {x: 0.255, y: -0.285}
       - {x: 0.45499998, y: -0.265}
       - {x: 0.49499997, y: -0.255}
+--- !u!50 &7668783448448547795
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2796761666946612298}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!114 &852984152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,27 +199,6 @@ MonoBehaviour:
   paddingRight: 0.5
   paddingTop: 13
   paddingBottom: 2.5
---- !u!50 &7668783448448547795
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2796761666946612298}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &4094089299877167915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,6 +213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   hitEffect: {fileID: 8932595635437480959, guid: 25e94128a96374940aa8bc8a5d100be9, type: 3}
+  applyCameraShake: 1
 --- !u!114 &375940460223145933
 MonoBehaviour:
   m_ObjectHideFlags: 0

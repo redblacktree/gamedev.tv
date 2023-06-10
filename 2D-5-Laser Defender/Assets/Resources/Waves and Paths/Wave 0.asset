@@ -18,6 +18,6 @@ MonoBehaviour:
   - {fileID: 7191167688197825731, guid: ed572973997ae9c4dbb93bb1f3a36451, type: 3}
   - {fileID: 7191167688197825731, guid: ed572973997ae9c4dbb93bb1f3a36451, type: 3}
   timeBetweenSpawns: 1
-  spawnRandomFactor: 1
+  spawnRandomFactor: 0.3
   minimumSpawnDelay: 0.2
   moveSpeed: 5
