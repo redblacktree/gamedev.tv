@@ -17,13 +17,11 @@ public class ScoreKeeper : MonoBehaviour
     {
         if (instance == null)
         {
-            Debug.Log("ScoreKeeper instance created.");
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Debug.Log("ScoreKeeper instance already exists, destroying new instance.");
             gameObject.SetActive(false);
             Destroy(gameObject);
         }
