@@ -5,6 +5,13 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    public Health health;
+    [SerializeField] float speed = 10f;
+    [SerializeField] float paddingLeft = 0.5f;
+    [SerializeField] float paddingRight = 0.5f;
+    [SerializeField] float paddingTop = 13f;
+    [SerializeField] float paddingBottom = 2.5f;
+
     Shooter shooter;
     Vector2 rawInput;
     Vector2 minBounds;
@@ -12,15 +19,10 @@ public class Player : MonoBehaviour
     Vector2 minPlayerBounds;
     Vector2 maxPlayerBounds;
 
-    [SerializeField] float speed = 10f;
-    [SerializeField] float paddingLeft = 0.5f;
-    [SerializeField] float paddingRight = 0.5f;
-    [SerializeField] float paddingTop = 13f;
-    [SerializeField] float paddingBottom = 2.5f;
-
     void Awake()
     {
         shooter = GetComponent<Shooter>();
+        health = GetComponent<Health>();
     }
 
     void Start()

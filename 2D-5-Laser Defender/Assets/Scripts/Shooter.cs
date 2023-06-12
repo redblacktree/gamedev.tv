@@ -17,7 +17,15 @@ public class Shooter : MonoBehaviour
     [SerializeField] float aiFireRateMinimum = 0.2f;
 
     [HideInInspector] public bool isFiring = false;
+    
     Coroutine fireCoroutine;
+    AudioPlayer audioPlayer;
+    bool isPlayer;
+
+    void Awake()
+    {
+        audioPlayer = FindObjectOfType<AudioPlayer>();
+    }
 
     void Start()
     {
@@ -25,6 +33,7 @@ public class Shooter : MonoBehaviour
         {
             isFiring = true;
         }
+        isPlayer = gameObject.layer == LayerMask.NameToLayer("Player");
     }
 
     void Update()
@@ -47,13 +56,20 @@ public class Shooter : MonoBehaviour
 
     IEnumerator FireContinuously()
     {
-        while(isFiring)
+        while(isFiring && IsInView())
         {
             GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
             projectile.GetComponent<Rigidbody2D>().velocity = transform.up * projectileSpeed;
             Destroy(projectile, projectileLIfetime);
+            audioPlayer.PlayShooting(isPlayer);
             yield return new WaitForSeconds(GetFireRate());
         }
+    }
+
+    bool IsInView()
+    {
+        Vector3 viewportPoint = Camera.main.WorldToViewportPoint(transform.position);
+        return viewportPoint.x >= 0 && viewportPoint.x <= 1 && viewportPoint.y >= 0 && viewportPoint.y <= 1;
     }
 
     float GetFireRate()
